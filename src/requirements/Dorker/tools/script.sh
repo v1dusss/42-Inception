@@ -1,3 +1,5 @@
+echo "alias test='echo HelloWorld'" >> ~/.bashrc
 
+echo "HelloWorld"
 
-echo alias test='echo HelloWorld' >> ~/.bashrc
+source ~/.bashrc
