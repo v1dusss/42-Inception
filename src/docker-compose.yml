@@ -1,0 +1,5 @@
+services:
+  dorker:
+    build:
+      context: ./requirements/Dorker
+    container_name: dorker
