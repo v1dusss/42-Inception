@@ -3,6 +3,8 @@ services:
     build:
       context: ./requirements/Dorker
     container_name: dorker
+    networks:
+      - inception_network
 
   mariadb:
     build:
