@@ -40,7 +40,7 @@ status:
 # Enter a shell in a specific container
 # Usage: make shell SERVICE=servicename
 shell:
-	$(DOCKER_COMPOSE) exec $(SERVICE) sh
+	$(DOCKER_COMPOSE) exec $(SERVICE) bash
 
 # Display logs for containers
 # Usage: make logs SERVICE=servicename (optional)

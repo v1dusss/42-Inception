@@ -1,11 +1,4 @@
 services:
-  dorker:
-    build:
-      context: ./requirements/Dorker
-    container_name: dorker
-    networks:
-      - inception_network
-
   mariadb:
     build:
       context: ./requirements/mariadb
@@ -18,6 +11,20 @@ services:
     networks:
       - inception_network
 
+  # wordpress:
+  #   build:
+  #     context: ./requirements/wordpress
+  #   container_name: wordpress
+  #   depends_on:
+  #     - mariadb
+  #   restart: always
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - wordpress_data:/var/www/html
+  #   networks:
+  #     - inception_network
+
 volumes:
   mariadb_data:
     driver: local
@@ -25,6 +32,12 @@ volumes:
       type: none
       o: bind
       device: ${HOME}/data/mariadb
+  # wordpress_data:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     o: bind
+  #     device: ${HOME}/data/wordpress
 
 networks:
   inception_network:
