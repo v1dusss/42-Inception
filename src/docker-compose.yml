@@ -25,6 +25,19 @@ services:
   #   networks:
   #     - inception_network
 
+  nginx:
+    build:
+      context: ./requirements/nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - "443:443"
+    volumes:
+      - ./requirements/nginx/conf:/etc/nginx/conf.d
+      # - ./secrets:/etc/nginx/ssl
+    networks:
+      - inception_network
+
 volumes:
   mariadb_data:
     driver: local
