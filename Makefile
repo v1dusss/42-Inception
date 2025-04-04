@@ -5,7 +5,10 @@ all: up
 
 up:
 	@mkdir -p $(DATA_PATH)/wordpress
+	@chmod -R 777 $(DATA_PATH)/wordpress
 	@mkdir -p $(DATA_PATH)/mariadb
+	@chmod -R 777 $(DATA_PATH)/mariadb
+	@mkdir -p src/secrets
 	@echo "Building and starting containers..."
 	$(DOCKER_COMPOSE) up --build
 
@@ -26,6 +29,8 @@ clean: down
 fclean: clean
 	@echo "Removing data directories..."
 	@rm -rf $(DATA_PATH)
+	@echo "Removing SSL certificates..."
+	@rm -rf src/secrets
 
 re: fclean all
 

@@ -7,7 +7,10 @@ services:
     env_file:
       - .env
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - type: bind
+        source: ${HOME}/data/mariadb
+        target: /var/lib/mysql
+        read_only: false
     networks:
       - inception_network
 
@@ -34,7 +37,7 @@ services:
       - "443:443"
     volumes:
       - ./requirements/nginx/conf:/etc/nginx/conf.d
-      # - ./secrets:/etc/nginx/ssl
+      - ./secrets:/etc/nginx/ssl
     networks:
       - inception_network
 
