@@ -7,26 +7,23 @@ services:
     env_file:
       - .env
     volumes:
-      - type: bind
-        source: ${HOME}/data/mariadb
-        target: /var/lib/mysql
-        read_only: false
+      - mariadb_data:/var/lib/mysql
     networks:
       - inception_network
 
-  # wordpress:
-  #   build:
-  #     context: ./requirements/wordpress
-  #   container_name: wordpress
-  #   depends_on:
-  #     - mariadb
-  #   restart: always
-  #   env_file:
-  #     - .env
-  #   volumes:
-  #     - wordpress_data:/var/www/html
-  #   networks:
-  #     - inception_network
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - inception_network
 
   nginx:
     build:
@@ -36,6 +33,7 @@ services:
     ports:
       - "443:443"
     volumes:
+      - wordpress_data:/var/www/html:ro
       - ./requirements/nginx/conf:/etc/nginx/conf.d
       - ./secrets:/etc/nginx/ssl
     networks:
@@ -48,12 +46,12 @@ volumes:
       type: none
       o: bind
       device: ${HOME}/data/mariadb
-  # wordpress_data:
-  #   driver: local
-  #   driver_opts:
-  #     type: none
-  #     o: bind
-  #     device: ${HOME}/data/wordpress
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${HOME}/data/wordpress
 
 networks:
   inception_network:
