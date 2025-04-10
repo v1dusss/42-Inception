@@ -23,8 +23,8 @@ down:
 clean: down
 	@echo "Cleaning Docker resources..."
 	@docker system prune -a --force
-	@docker volume rm $$(docker volume ls -q | grep inception) 2>/dev/null || true
-	@docker network rm $$(docker network ls -q | grep inception) 2>/dev/null || true
+	@docker volume rm $$(docker volume ls -q) 2>/dev/null || true
+	@docker network rm $$(docker network ls -q) 2>/dev/null || true
 
 fclean: clean
 	@echo "Removing data directories..."

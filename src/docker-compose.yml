@@ -1,4 +1,4 @@
-services:
+wordpresservices:
   mariadb:
     build:
       context: ./requirements/mariadb
@@ -7,10 +7,7 @@ services:
     env_file:
       - .env
     volumes:
-      - type: bind
-        source: ${HOME}/data/mariadb
-        target: /var/lib/mysql
-        read_only: false
+      - mariadb_data:/var/lib/mysql
     networks:
       - inception_network
 
@@ -38,7 +35,7 @@ services:
     ports:
       - "443:443"
     volumes:
-      - wordpress_data:/var/www/html:ro
+      - wordpress_data:/var/www/html
       - ./requirements/nginx/conf:/etc/nginx/conf.d
       - ./secrets:/etc/nginx/ssl
     networks:

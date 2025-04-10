@@ -6,7 +6,7 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 fi
 
 echo "Starting MariaDB..."
-/usr/bin/mysqld_safe --user=mysql &
+/usr/bin/mysqld_safe --user=mysql
 
 until mysqladmin ping -h localhost --silent; do
   echo "Waiting for MariaDB to be ready..."
