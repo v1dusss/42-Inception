@@ -12,7 +12,7 @@ RUN mkdir -p /var/run/mysqld && \
 COPY ./tools/setup.sh /
 RUN chmod +x /setup.sh
 
-# 3306 is the default port for MariaDB
-EXPOSE 3306
+# # 3306 is the default port for MariaDB
+# EXPOSE 3306
 
 ENTRYPOINT ["/setup.sh"]
