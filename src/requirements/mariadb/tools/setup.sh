@@ -9,16 +9,16 @@ if [ ! -d "/var/lib/mysql/mysql" ]; then
 fi
 
 echo "Starting MariaDB..."
-/usr/bin/mysqld_safe --user=mysql &
+mysqld_safe & sleep 10
 
 # Wait for MariaDB to be ready
-until mysqladmin ping -h localhost --silent; do
-  echo "Waiting for MariaDB to be ready..."
-  sleep 1
+while ! mysqladmin ping -h localhost --silent; do
+    echo "[MariaDB] Waiting for MariaDB to start..."
+    sleep 1
 done
 
 echo "Creating database and users..."
-mysql -u root <<EOF
+mysql -u root -p"${MYSQL_ROOT_PASSWORD}" <<EOF
 CREATE DATABASE IF NOT EXISTS \`${MYSQL_DATABASE}\`;
 CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
 GRANT ALL PRIVILEGES ON \`${MYSQL_DATABASE}\`.* TO '${MYSQL_USER}'@'%';
@@ -27,4 +27,6 @@ FLUSH PRIVILEGES;
 EOF
 
 echo "MariaDB setup completed."
-exec mysqld --user=mysql
+# exec mysqld --user=mysql
+
+wait

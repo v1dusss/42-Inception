@@ -17,12 +17,15 @@ chown www-data:www-data /var/www/html/$DOMAIN_NAME/public_html
 WP_PATH="/var/www/html/$DOMAIN_NAME/public_html"
 wp core download --path=$WP_PATH --allow-root
 
+echo "[WORDPRESS][DEBUG] WP_PATH: ${WP_PATH}"
 cd $WP_PATH
 
 echo "[DEBUG] WP_PATH: ${WP_PATH}"
 echo "[DEBUG] MYSQL_DATABASE: ${MYSQL_DATABASE}"
 echo "[DEBUG] MYSQL_USER: ${MYSQL_USER}"
 echo "[DEBUG] MYSQL_PASSWORD: ${MYSQL_PASSWORD}"
+
+sleep 10
 
 wp config create\
     --dbname=$MYSQL_DATABASE \
@@ -38,6 +41,8 @@ until wp db check --allow-root; do
   sleep 5
 done
 
+echo "[WORDPRESS] Database is ready."
+echo "[WORDPRESS] Installing WordPress..."
 wp core install \
     --path=$WP_PATH \
     --url=$DOMAIN_NAME \
@@ -51,4 +56,4 @@ sed -i 's|listen = /run/php/php7.4-fpm.sock|listen = 0.0.0.0:9000|g' /etc/php/7.
 
 echo "[WORDPRESS] WordPress is installed and configured."
 
-exec php-fpm8.1 -F
+exec php-fpm7.4 --nodaemonize

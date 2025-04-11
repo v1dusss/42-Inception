@@ -7,7 +7,7 @@ mkdir -p /etc/nginx/ssl
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -keyout /etc/nginx/ssl/ssl.key \
     -out /etc/nginx/ssl/ssl.crt \
-    -subj "/C=FR/ST=Paris/L=Paris/O=42/CN=vsivanat.42.fr"
+    -subj "/C=DE/ST=BW/L=HB/O=42/CN=vsivanat.42.fr"
 
 # Start Nginx
 nginx -g "daemon off;"
