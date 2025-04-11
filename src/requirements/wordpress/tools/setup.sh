@@ -13,11 +13,16 @@ chown www-data:www-data /usr/local/bin/wp
 mkdir -p /var/www/html/$DOMAIN_NAME/public_html
 chown -R www-data:www-data /var/www/html/$DOMAIN_NAME/public_html
 chown www-data:www-data /var/www/html/$DOMAIN_NAME/public_html
-cd /var/www/html/$DOMAIN_NAME/public_html
+
 WP_PATH="/var/www/html/$DOMAIN_NAME/public_html"
 wp core download --path=$WP_PATH --allow-root
 
 cd $WP_PATH
+
+echo "[DEBUG] WP_PATH: ${WP_PATH}"
+echo "[DEBUG] MYSQL_DATABASE: ${MYSQL_DATABASE}"
+echo "[DEBUG] MYSQL_USER: ${MYSQL_USER}"
+echo "[DEBUG] MYSQL_PASSWORD: ${MYSQL_PASSWORD}"
 
 wp config create\
     --dbname=$MYSQL_DATABASE \
@@ -33,16 +38,17 @@ until wp db check --allow-root; do
   sleep 5
 done
 
-
 wp core install \
     --path=$WP_PATH \
     --url=$DOMAIN_NAME \
     --title='42-Inception' \
     --admin_user=$WP_ADMIN_USER \
-    --admin_password= $WP_PASSWORD \
+    --admin_password=$WP_PASSWORD \
     --admin_email='email@domain.com' \
     --allow-root
 
-sed -i "s/listne = .*/listen = 9000/listen = 9001/" /etc/php/8.1/fpm/pool.d/www.conf
+sed -i 's|listen = /run/php/php7.4-fpm.sock|listen = 0.0.0.0:9000|g' /etc/php/7.4/fpm/pool.d/www.conf
+
+echo "[WORDPRESS] WordPress is installed and configured."
 
 exec php-fpm8.1 -F

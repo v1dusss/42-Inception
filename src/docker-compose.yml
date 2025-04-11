@@ -1,4 +1,4 @@
-wordpresservices:
+services:
   mariadb:
     build:
       context: ./requirements/mariadb

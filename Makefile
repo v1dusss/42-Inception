@@ -1,4 +1,4 @@
-DOCKER_COMPOSE = docker-compose -f src/docker-compose.yml
+DOCKER_COMPOSE = docker compose -f src/docker-compose.yml
 DATA_PATH = $(HOME)/data
 
 all: up
@@ -28,7 +28,7 @@ clean: down
 
 fclean: clean
 	@echo "Removing data directories..."
-	@rm -rf $(DATA_PATH)
+	@sudo rm -rf $(DATA_PATH)
 	@echo "Removing SSL certificates..."
 	@rm -rf src/secrets
 
