@@ -12,7 +12,7 @@ chown www-data:www-data /usr/local/bin/wp
 
 mkdir -p /var/www/html/$DOMAIN_NAME/public_html
 chown -R www-data:www-data /var/www/html/$DOMAIN_NAME/public_html
-chown www-data:www-data /var/www/html/$DOMAIN_NAME/public_html
+chmod -R 755 /var/www/html/vsivanat.42.fr/public_html
 
 WP_PATH="/var/www/html/$DOMAIN_NAME/public_html"
 wp core download --path=$WP_PATH --allow-root
@@ -48,7 +48,7 @@ wp core install \
     --url=$DOMAIN_NAME \
     --title='42-Inception' \
     --admin_user=$WP_ADMIN_USER \
-    --admin_password=$WP_PASSWORD \
+    --admin_password=$WP_ADMIN_PASSWORD \
     --admin_email='email@domain.com' \
     --allow-root
 
