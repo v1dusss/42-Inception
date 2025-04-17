@@ -5,10 +5,21 @@ all: up
 
 up:
 	@bash src/check_env.sh
-	@mkdir -p $(DATA_PATH)/wordpress
-	@chmod -R 777 $(DATA_PATH)/wordpress
-	@mkdir -p $(DATA_PATH)/mariadb
-	@chmod -R 777 $(DATA_PATH)/mariadb
+	@if [ ! -d $(DATA_PATH) ]; then \
+		echo "Creating data directory..."; \
+		mkdir -p $(DATA_PATH); \
+		chmod -R 777 $(DATA_PATH); \
+	fi
+	@if [ ! -d $(DATA_PATH)/mariadb ]; then \
+		echo "Creating mariadb data directory..."; \
+		mkdir -p $(DATA_PATH)/mariadb; \
+		chmod -R 777 $(DATA_PATH)/mariadb; \
+	fi
+	@if [ ! -d $(DATA_PATH)/wordpress ]; then \
+		echo "Creating wordpress data directory..."; \
+		mkdir -p $(DATA_PATH)/wordpress; \
+		chmod -R 777 $(DATA_PATH)/wordpress; \
+	fi
 	@mkdir -p src/secrets
 	@echo "Building and starting containers..."
 	$(DOCKER_COMPOSE) up --build
@@ -22,18 +33,18 @@ down:
 	$(DOCKER_COMPOSE) down
 
 clean: down
+	@echo "Removing SSL certificates..."
+	@rm -rf src/secrets
+
+fclean: clean
 	@echo "Cleaning Docker resources..."
 	@docker system prune -a --force
 	@docker volume rm $$(docker volume ls -q) 2>/dev/null || true
 	@docker network rm $$(docker network ls -q) 2>/dev/null || true
-
-fclean: clean
 	@echo "Removing data directories..."
 	@sudo rm -rf $(DATA_PATH)
-	@echo "Removing SSL certificates..."
-	@rm -rf src/secrets
 
-re: fclean all
+re: clean all
 
 status:
 	@echo "Container status:"
