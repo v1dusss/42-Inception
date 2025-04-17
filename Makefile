@@ -4,6 +4,7 @@ DATA_PATH = $(HOME)/data
 all: up
 
 up:
+	@bash src/check_env.sh
 	@mkdir -p $(DATA_PATH)/wordpress
 	@chmod -R 777 $(DATA_PATH)/wordpress
 	@mkdir -p $(DATA_PATH)/mariadb
