@@ -35,10 +35,11 @@ down:
 clean: down
 	@echo "Removing SSL certificates..."
 	@rm -rf src/secrets
+	@echo "Removing Docker containers and images..."
+	@docker system prune -a --force
 
 fclean: clean
 	@echo "Cleaning Docker resources..."
-	@docker system prune -a --force
 	@docker volume rm $$(docker volume ls -q) 2>/dev/null || true
 	@docker network rm $$(docker network ls -q) 2>/dev/null || true
 	@echo "Removing data directories..."
