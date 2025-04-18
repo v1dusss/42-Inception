@@ -3,6 +3,10 @@ services:
     build:
       context: ./requirements/mariadb
     container_name: mariadb
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping"]
+      timeout: 3s
+      retries: 5
     restart: always
     env_file:
       - .env

@@ -25,8 +25,6 @@ echo "[DEBUG] MYSQL_DATABASE: ${MYSQL_DATABASE}"
 echo "[DEBUG] MYSQL_USER: ${MYSQL_USER}"
 echo "[DEBUG] MYSQL_PASSWORD: ${MYSQL_PASSWORD}"
 
-sleep 10
-
 wp config create\
     --dbname=$MYSQL_DATABASE \
     --dbuser=$MYSQL_USER \
