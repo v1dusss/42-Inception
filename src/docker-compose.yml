@@ -20,12 +20,13 @@ services:
       context: ./requirements/wordpress
     container_name: wordpress
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     restart: always
     env_file:
       - .env
-    ports:
-      - "9000:9000"
+    # ports:
+    #   - "9000:9000"
     volumes:
       - wordpress_data:/var/www/html
     networks:
