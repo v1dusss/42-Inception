@@ -20,11 +20,6 @@ wp core download --path=$WP_PATH --allow-root
 echo "[WORDPRESS][DEBUG] WP_PATH: ${WP_PATH}"
 cd $WP_PATH
 
-echo "[DEBUG] WP_PATH: ${WP_PATH}"
-echo "[DEBUG] MYSQL_DATABASE: ${MYSQL_DATABASE}"
-echo "[DEBUG] MYSQL_USER: ${MYSQL_USER}"
-echo "[DEBUG] MYSQL_PASSWORD: ${MYSQL_PASSWORD}"
-
 wp config create\
     --dbname=$MYSQL_DATABASE \
     --dbuser=$MYSQL_USER \
